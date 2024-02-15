@@ -1,4 +1,4 @@
-package com.example.profi24;
+package com.example.profi24.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+
+import com.example.profi24.R;
 
 public class Splash extends AppCompatActivity {
 
