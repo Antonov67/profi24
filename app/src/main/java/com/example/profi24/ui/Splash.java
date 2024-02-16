@@ -11,7 +11,7 @@ import com.example.profi24.R;
 
 public class Splash extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 setContentView(R.layout.activity_splash2);
-                new CountDownTimer(3000,1000){
+                new CountDownTimer(1000,1000){
                     @Override
                     public void onTick(long l) {
 
