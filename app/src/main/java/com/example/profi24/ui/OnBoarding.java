@@ -1,8 +1,16 @@
 package com.example.profi24.ui;
 
+
+
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
 import android.content.Intent;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +40,7 @@ public class OnBoarding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
+
         //
         skipButton = findViewById(R.id.skip_button);
         nextButton = findViewById(R.id.next_button);
@@ -42,45 +51,82 @@ public class OnBoarding extends AppCompatActivity {
         t1 = findViewById(R.id.textView);
         t2 = findViewById(R.id.textView2);
 
-        //заполним очередь
-        initDeque();
 
-        //заполним первый экран первым элементом очереди и удалим его из очереди
-        OnBoardingRecord record = deque.poll();
-        imageView.setImageResource(record.getImage());
-        title.setText(record.getTitle());
-        text.setText(record.getText());
 
-        //нажимаем на кнопку next
-        //если очередь не пустая, то заполняем новый экран
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        //Для работы кнопки Skip создадим SharedPreference
+        SharedPreferences settings = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+
+        //эти строчки нужны, чтобы отменить SKIP, просто активируйте их и один раз запустите, потом снова закомментируйте их
+//        SharedPreferences.Editor prefEditor = settings.edit();
+//        prefEditor.putString("isSkip", "false");
+//        prefEditor.apply();
+
+        //При нажати на кнопку Skip запишем в настройки значение true для переменной isSkip
+        skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (deque.size() > 0){
-                    //берем очередной элемент очереди и показываем его на экране
-                    OnBoardingRecord record = deque.poll();
-                    imageView.setImageResource(record.getImage());
-                    title.setText(record.getTitle());
-                    text.setText(record.getText());
-                }
-                //если очередь после извлечения элемента стала пустой, то прячем кнопки skip и next
-                // и показываем кнопку SignUP и ссылку на SignIn
-                if (deque.size() == 0){
-                    skipButton.setVisibility(View.GONE);
-                    nextButton.setVisibility(View.GONE);
-                    signupButton.setVisibility(View.VISIBLE);
-                    t1.setVisibility(View.VISIBLE);
-                    t2.setVisibility(View.VISIBLE);
-                    //сделаем переход на пустое Активити Holder
-                    t2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(OnBoarding.this, HolderActivity.class));
-                        }
-                    });
-                }
+                // сохраняем его в настройках
+                SharedPreferences.Editor prefEditor = settings.edit();
+                prefEditor.putString("isSkip", "true");
+                prefEditor.apply();
+                //открываем Активити Holder
+                startActivity(new Intent(OnBoarding.this, HolderActivity.class));
             }
         });
+
+
+
+        //Если ранее был нажат Skip, то сразу переходим на Активити Holder, а если нет, то работают экраны OnBoarding
+        //читаем значение переменной isSkip из Настроек
+
+        String isSkip = settings.getString("isSkip","не определено");
+        if (isSkip.equals("true")){
+            //открываем Активити Holder
+            startActivity(new Intent(OnBoarding.this, HolderActivity.class));
+        }else{
+            //показываем экраны OnBoarding
+            //заполним очередь
+            initDeque();
+
+            //заполним первый экран первым элементом очереди и удалим его из очереди
+            OnBoardingRecord record = deque.poll();
+            imageView.setImageResource(record.getImage());
+            title.setText(record.getTitle());
+            text.setText(record.getText());
+
+            //нажимаем на кнопку next
+            //если очередь не пустая, то заполняем новый экран
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (deque.size() > 0){
+                        //берем очередной элемент очереди и показываем его на экране
+                        OnBoardingRecord record = deque.poll();
+                        imageView.setImageResource(record.getImage());
+                        title.setText(record.getTitle());
+                        text.setText(record.getText());
+                    }
+                    //если очередь после извлечения элемента стала пустой, то прячем кнопки skip и next
+                    // и показываем кнопку SignUP и ссылку на SignIn
+                    if (deque.size() == 0){
+                        skipButton.setVisibility(View.GONE);
+                        nextButton.setVisibility(View.GONE);
+                        signupButton.setVisibility(View.VISIBLE);
+                        t1.setVisibility(View.VISIBLE);
+                        t2.setVisibility(View.VISIBLE);
+                        //сделаем переход на пустое Активити Holder
+                        signupButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(OnBoarding.this, HolderActivity.class));
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+
 
     }
 
