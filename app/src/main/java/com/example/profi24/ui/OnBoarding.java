@@ -51,14 +51,18 @@ public class OnBoarding extends AppCompatActivity {
         t1 = findViewById(R.id.textView);
         t2 = findViewById(R.id.textView2);
 
+        //заполним очередь
+        initDeque();
+
 
 
         //Для работы кнопки Skip создадим SharedPreference
         SharedPreferences settings = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = settings.edit();
 
-        //эти строчки нужны, чтобы отменить SKIP, просто активируйте их и один раз запустите, потом снова закомментируйте их
-//        SharedPreferences.Editor prefEditor = settings.edit();
+//        //эти строчки нужны, чтобы отменить SKIP и вернуть статус просмотра очереди экранов OnBoard, просто активируйте их и один раз запустите, потом снова закомментируйте их
 //        prefEditor.putString("isSkip", "false");
+//        prefEditor.putInt("index", 0);
 //        prefEditor.apply();
 
         //При нажати на кнопку Skip запишем в настройки значение true для переменной isSkip
@@ -80,19 +84,23 @@ public class OnBoarding extends AppCompatActivity {
         //читаем значение переменной isSkip из Настроек
 
         String isSkip = settings.getString("isSkip","не определено");
-        if (isSkip.equals("true")){
+        //уберем из очереди экраны, которые уже были показаны
+        int index = settings.getInt("index", 0);
+        for (int i = 0; i < index; i++) {
+            deque.poll();
+        }
+
+        if (isSkip.equals("true") || deque.size() == 1){
             //открываем Активити Holder
             startActivity(new Intent(OnBoarding.this, HolderActivity.class));
         }else{
             //показываем экраны OnBoarding
-            //заполним очередь
-            initDeque();
-
             //заполним первый экран первым элементом очереди и удалим его из очереди
             OnBoardingRecord record = deque.poll();
             imageView.setImageResource(record.getImage());
             title.setText(record.getTitle());
             text.setText(record.getText());
+
 
             //нажимаем на кнопку next
             //если очередь не пустая, то заполняем новый экран
@@ -105,6 +113,11 @@ public class OnBoarding extends AppCompatActivity {
                         imageView.setImageResource(record.getImage());
                         title.setText(record.getTitle());
                         text.setText(record.getText());
+                        //запишем текущее состояне очереди
+                        SharedPreferences.Editor prefEditor = settings.edit();
+                        prefEditor.putInt("index", settings.getInt("index", 0) + 1);
+                        prefEditor.apply();
+
                     }
                     //если очередь после извлечения элемента стала пустой, то прячем кнопки skip и next
                     // и показываем кнопку SignUP и ссылку на SignIn
