@@ -74,7 +74,7 @@ public class OnBoarding extends AppCompatActivity {
                 prefEditor.putString("isSkip", "true");
                 prefEditor.apply();
                 //открываем Активити Holder
-                startActivity(new Intent(OnBoarding.this, HolderActivity.class));
+                startActivity(new Intent(OnBoarding.this, SignUpActivity.class));
             }
         });
 
@@ -92,7 +92,7 @@ public class OnBoarding extends AppCompatActivity {
 
         if (isSkip.equals("true") || deque.size() == 1){
             //открываем Активити Holder
-            startActivity(new Intent(OnBoarding.this, HolderActivity.class));
+            startActivity(new Intent(OnBoarding.this, SignUpActivity.class));
         }else{
             //показываем экраны OnBoarding
             //заполним первый экран первым элементом очереди и удалим его из очереди
@@ -131,7 +131,7 @@ public class OnBoarding extends AppCompatActivity {
                         signupButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                startActivity(new Intent(OnBoarding.this, HolderActivity.class));
+                                startActivity(new Intent(OnBoarding.this, SignUpActivity.class));
                             }
                         });
                     }
