@@ -45,8 +45,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                 //если галочка стоит и проверка корректности почты на шаблон и на то, что все символы маленькие и что пароль 2 раза введен одинаково
                 if (checkBox.isChecked()
-                        && isEmailValid(e.toLowerCase())
-                        && p1.equals(p2)){
+                        && isEmailValid(e)
+                        && p1.equals(p2)
+                        && e.equals(e.toLowerCase())){
                     // запишем данные юзера
                     Utils.user.setEmail(e);
                     Utils.user.setPassword(p1);

@@ -38,8 +38,8 @@
         android:layout_marginLeft="15dp"
         android:fontFamily="@font/roboto"
         android:text="Full name"
-        android:textSize="16sp"
-        android:textColor="@color/gray2" />
+        android:textColor="@color/gray2"
+        android:textSize="16sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fullname"
@@ -267,7 +267,7 @@
             android:text="Already have an account?" />
 
         <TextView
-            android:onClick="signin"
+           android:onClick="signin"
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
