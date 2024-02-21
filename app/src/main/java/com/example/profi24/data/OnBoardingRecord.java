@@ -1,4 +1,4 @@
-package com.example.profi24.ui.data;
+package com.example.profi24.data;
 
 public class OnBoardingRecord {
     private int image;

@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.profi24.R;
-import com.example.profi24.ui.data.OnBoardingRecord;
+import com.example.profi24.data.OnBoardingRecord;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayDeque;
