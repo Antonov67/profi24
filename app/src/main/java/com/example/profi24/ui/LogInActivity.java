@@ -14,9 +14,11 @@ import android.widget.Toast;
 import com.example.profi24.R;
 import com.example.profi24.controller.API;
 import com.example.profi24.data.ResponseCreateUser;
+import com.example.profi24.data.User;
 import com.example.profi24.utils.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogInActivity extends AppCompatActivity {
 
-    TextInputEditText email, pswrd;
+    TextInputLayout email, pswrd;
     MaterialButton button;
     Retrofit retrofit;
 
@@ -34,13 +36,13 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        email = findViewById(R.id.logInEmailAddressField);
-        pswrd = findViewById(R.id.loginPassword);
+        email = findViewById(R.id.logInEmailAddress);
+        pswrd = findViewById(R.id.LoginPasswordTextInputLayout);
         button = findViewById(R.id.button_signin);
 
         //Заполним данными из предыдущего окна
-        email.setText(Utils.user.getEmail());
-        pswrd.setText(Utils.user.getPassword());
+        email.getEditText().setText(Utils.user.getEmail());
+        pswrd.getEditText().setText(Utils.user.getPassword());
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -54,6 +56,10 @@ public class LogInActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Если мы сразу пришли на окно входа, то создадим юзера для входа на основе данных из полей
+                User user = new User(String.valueOf(email.getEditText().getText()), String.valueOf(pswrd.getEditText().getText()));
+
                 Call<ResponseCreateUser> call = api.signUpByEmailAndPswrd(APIKEY, user);
                 call.enqueue(new Callback<ResponseCreateUser>() {
                     @Override
