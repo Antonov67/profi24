@@ -65,6 +65,7 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseCreateUser> call, Response<ResponseCreateUser> response) {
                         Toast.makeText(LogInActivity.this, "User create", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LogInActivity.this, HomeActivity.class));
                     }
 
                     @Override
