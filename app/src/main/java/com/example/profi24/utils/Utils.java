@@ -7,5 +7,6 @@ public class Utils {
     public static final String CONTENT_TYPE = "application/json";
     public static User user = new User("","");
     public static final String BASE_URL = "https://rukiqbmzmtvmfgkyuuun.supabase.co/auth/v1/";
+    public static final String BASE_URL2 = "https://rukiqbmzmtvmfgkyuuun.supabase.co/rest/v1/";
 
 }

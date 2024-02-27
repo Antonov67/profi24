@@ -25,5 +25,5 @@ public interface API {
     Call<Void> sendCode(@Header("apikey") String apikey, @Body Email email);
 
     @GET("profile")
-    Call<List<NameAndBalance>> getNameAndBallance(@Query("select")String select, @Header("apikey") String apikey);
+    Call<List<NameAndBalance>> getNameAndBallance(@Query("select") String select, @Header("apikey") String apikey);
 }

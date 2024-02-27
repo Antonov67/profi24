@@ -12,8 +12,5 @@ public class NameAndBalance {
     @Expose
     public String balance;
 
-    public NameAndBalance(String fio, String balance) {
-        this.fio = fio;
-        this.balance = balance;
-    }
+
 }

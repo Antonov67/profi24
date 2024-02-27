@@ -2,10 +2,12 @@ package com.example.profi24.data;
 
 import static com.example.profi24.utils.Utils.APIKEY;
 import static com.example.profi24.utils.Utils.BASE_URL;
+import static com.example.profi24.utils.Utils.CONTENT_TYPE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,29 +38,31 @@ public class ProfileActivity extends AppCompatActivity {
         balance = findViewById(R.id.textView20);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Utils.BASE_URL2)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         API api = retrofit.create(API.class);
 
-        Call<List<NameAndBalance>> call = api.getNameAndBallance("*", APIKEY);
-        call.enqueue(new Callback<List<NameAndBalance>>() {
-            @Override
-            public void onResponse(Call<List<NameAndBalance>> call, Response<List<NameAndBalance>> response) {
+       Call<List<NameAndBalance>> call = api.getNameAndBallance("fio,balance", APIKEY);
+       call.enqueue(new Callback<List<NameAndBalance>>() {
+           @Override
+           public void onResponse(Call<List<NameAndBalance>> call, Response<List<NameAndBalance>> response) {
+               if (response.isSuccessful()){
+                   //Toast.makeText(ProfileActivity.this, response.body().get(0).balance, Toast.LENGTH_SHORT).show();
+                   name.setText(response.body().get(0).fio);
+                   balance.setText(response.body().get(0).balance);
+               }
+               else {
+                   Toast.makeText(ProfileActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+               }
+           }
 
-                if (response.body() != null){
-                    Toast.makeText(ProfileActivity.this, response.body().get(0).balance, Toast.LENGTH_SHORT).show();
-                     name.setText(response.body().get(0).fio);
-                     balance.setText(response.body().get(0).balance);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<NameAndBalance>> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+           @Override
+           public void onFailure(Call<List<NameAndBalance>> call, Throwable t) {
+               Log.d("777", t.getMessage());
+           }
+       });
 
     }
 }
