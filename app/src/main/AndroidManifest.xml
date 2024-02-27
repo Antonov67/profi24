@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Profi24"
         tools:targetApi="31">
         <activity
+            android:name=".data.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.TransactionSuccessfulActivity"
             android:exported="false" />
         <activity

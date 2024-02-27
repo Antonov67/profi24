@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.profi24.R;
+import com.example.profi24.data.ProfileActivity;
 import com.example.profi24.data.User;
 import com.example.profi24.utils.Utils;
 import com.google.android.material.button.MaterialButton;
@@ -35,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         pswrd2 = findViewById(R.id.confirmPasswordTextInputLayout);
 
         //переход на активити 3 сессии
-        startActivity(new Intent(SignUpActivity.this, TransactionSuccessfulActivity.class));
+        startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
 
         //по нажатию на кнопку проверим корректность почты, галочку в чекбоксе и совпадение паролей
         button.setOnClickListener(new View.OnClickListener() {
