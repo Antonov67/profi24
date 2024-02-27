@@ -34,6 +34,9 @@ public class SignUpActivity extends AppCompatActivity {
         pswrd1 = findViewById(R.id.passwordTextInputLayout);
         pswrd2 = findViewById(R.id.confirmPasswordTextInputLayout);
 
+        //переход на активити 3 сессии
+        startActivity(new Intent(SignUpActivity.this, TransactionSuccessfulActivity.class));
+
         //по нажатию на кнопку проверим корректность почты, галочку в чекбоксе и совпадение паролей
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -127,7 +127,7 @@
             android:inputType="textPassword"
             android:textColor="@color/gray2"
             android:fontFamily="@font/roboto"
-            android:text="79038945169@yandex.ru"
+            android:text="smol-profi@yandex.ru"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
